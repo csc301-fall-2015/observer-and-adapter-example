@@ -2,27 +2,17 @@ package csc301.observerExample;
 
 import java.math.BigDecimal;
 
+/**
+ * A simple object that represents a stock.
+ * It has an id (String) and a price (BigDecimal).
+ * 
+ * Side note: BigDecimal is a Java type suitable currency values.
+ * It prevents numerical errors.
+ */
 public class Stock {
 
-	
 	private String id;
 	private BigDecimal price;
-	
-	/*
-	 * A note about BigDecimal.
-	 * 
-	 * During exercise 1, some of you noticed that using double to save
-	 * currency values (limited to 2 decimal places), can lead to some
-	 * unexpected behaviour.
-	 * 
-	 * This is related to the way that doubles are stored in memory (64 bits,
-	 * interpreted as a binary number according to some IEEE standard) - Some numbers
-	 * cannot be represented accurately in binary, so we have some small error.
-	 * As we perform arithmetic operations (especially multiplication/division) these
-	 * errors propagate, and become more significant.
-	 * 
-	 * BigDecimal is a more suitable Java type for currency values.
-	 */
 	
 	
 	public Stock(String id, BigDecimal price) {

@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.Observable;
 import java.util.Observer;
 
-import javafx.collections.ListChangeListener.Change;
-
 public class ObservableStock extends Stock {
 
   class InternalObservable extends Observable {

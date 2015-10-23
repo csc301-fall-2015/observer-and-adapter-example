@@ -1,6 +1,9 @@
 package csc301.observerExample;
 
-public class StockObserverAdapter implements StockObserver {
+import java.util.Observable;
+import java.util.Observer;
+
+public class StockObserverAdapter implements Observer {
 
 	Stock lastSeen;
 	StockObserver2 observer;
@@ -10,11 +13,11 @@ public class StockObserverAdapter implements StockObserver {
 	}
 	
 	
-	@Override
-	public void onUpdate(Stock stock) {
-		observer.onUpdate(lastSeen, stock);
-		lastSeen = new Stock(stock.getId(), stock.getPrice());
-	}
+  @Override
+  public void update(Observable o, Object arg) {
+    // TODO Auto-generated method stub
+    
+  }
 	
 
 }

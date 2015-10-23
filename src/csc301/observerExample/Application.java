@@ -1,19 +1,18 @@
 package csc301.observerExample;
 
+import java.util.Observable;
+import java.util.Observer;
 
-public class Application implements StockObserver2 {
+public class Application implements Observer {
 
 	@Override
-	public void onUpdate(Stock stockBefore, Stock stockAfter) {
-		if(stockBefore == null){
-			System.out.println(stockAfter);
-		} else if(stockAfter.getPrice().compareTo(stockBefore.getPrice()) > 0){
-			System.out.println("UP: " + stockAfter);
-		} else if(stockAfter.getPrice().compareTo(stockBefore.getPrice()) == 0){
-			System.out.println("SAME: " + stockAfter);
-		} else {
-			System.out.println("DOWN: " + stockAfter);
-		}		
-	}
+	public void update(Observable o, Object arg) {
+	  //o is just housekeeping..
+	  ObservableStock s = (ObservableStock)arg;
+	  if ( s != null ) {
+        System.out.println( s.toString() );	    
+	  }
+    
+  }
 
 }

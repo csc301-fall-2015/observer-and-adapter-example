@@ -1,43 +1,41 @@
 package csc301.observerExample;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Observable;
+import java.util.Observer;
+
+import javafx.collections.ListChangeListener.Change;
 
 public class ObservableStock extends Stock {
 
-	private Set<StockObserver> observers;
+  class InternalObservable extends Observable {
+    public void setChanged(){
+      super.setChanged();
+    }
+  }
+  
+	private InternalObservable o;
 	
 	public ObservableStock(String id, BigDecimal price) {
 		super(id, price);
-		observers = new HashSet<StockObserver>();
+		o = new InternalObservable();
 	}
 
-	
 	@Override
 	public void setPrice(BigDecimal price) {
 		super.setPrice(price);
-		notifyObservers();
-	}
-	
-	private void notifyObservers(){
-		if(observers != null){
-			for(StockObserver observer : observers){
-				observer.onUpdate(this);
-			}
+		if (o != null){
+		  o.setChanged();
+		  o.notifyObservers(this);
 		}
 	}
 	
-	
-	public void addObserver(StockObserver o){
-		if(o == null){
-			throw new IllegalArgumentException("Cannot add null as an observer.");
-		}
-		observers.add(o);
+	public void addObserver(Observer o){
+	  this.o.addObserver(o);
 	}
 	
 	
-	public void removeObserver(StockObserver o){
-		observers.remove(o);
+	public void removeObserver(Observer o){
+		this.o.deleteObserver(o);
 	}
 }

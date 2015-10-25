@@ -6,34 +6,38 @@ import java.util.Observer;
 
 public class ObservableStock extends Stock {
 
+
   class InternalObservable extends Observable {
-    public void setChanged(){
-      super.setChanged();
+    Object payload;
+    InternalObservable(Object payload) {
+      this.payload = payload;
+    }
+    void newValue(Object o) {
+      notifyObservers(payload);
+      setChanged(); 
     }
   }
-  
-	private InternalObservable o;
-	
-	public ObservableStock(String id, BigDecimal price) {
-		super(id, price);
-		o = new InternalObservable();
-	}
 
-	@Override
-	public void setPrice(BigDecimal price) {
-		super.setPrice(price);
-		if (o != null){
-		  o.setChanged();
-		  o.notifyObservers(this);
-		}
-	}
-	
-	public void addObserver(Observer o){
-	  this.o.addObserver(o);
-	}
-	
-	
-	public void removeObserver(Observer o){
-		this.o.deleteObserver(o);
-	}
+  private InternalObservable observable;
+
+  public ObservableStock(String id, BigDecimal price) {
+    super(id, price); // TODO: which may call virtual setPrice.. which would send to o, which is null.
+    observable = new InternalObservable(this);
+  }
+
+  @Override
+  public void setPrice(BigDecimal price) {
+    super.setPrice(price);
+    if (observable != null) {
+      observable.newValue(this);
+    }
+  }
+
+  public void addObserver(Observer o) {
+    this.observable.addObserver(o);
+  }
+
+  public void removeObserver(Observer o) {
+    this.observable.deleteObserver(o);
+  }
 }

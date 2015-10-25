@@ -5,14 +5,9 @@ import java.util.Observer;
 
 public class Application implements Observer {
 
-	@Override
-	public void update(Observable o, Object arg) {
-	  //o is just housekeeping..
-	  ObservableStock s = (ObservableStock)arg;
-	  if ( s != null ) {
-        System.out.println( s.toString() );	    
-	  }
-    
+  @Override
+  public void update(Observable o, Object payload) {
+    System.out.println(payload.toString()); //NOTE: the arg is the model object that changed
   }
 
 }
